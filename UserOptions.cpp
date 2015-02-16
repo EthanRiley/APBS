@@ -29,7 +29,7 @@ bool UserOptions::DeleteIgnoredDirectories(){
 	IgnoredDirectories.clear();
 	return true;
 }
-bool UserOptions::ReadOptionFile(vector<string> &listOfStrings){
+bool UserOptions::ReadOptionFile(vector<string> &listOfStrings){//Testing; Does Nothing Right Now
 	string Data;
 	getline(OptionFileRead, Data, ';');
 	unsigned CommaIndex = Data.find(',');
