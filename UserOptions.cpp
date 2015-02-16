@@ -30,36 +30,41 @@ bool UserOptions::DeleteIgnoredDirectories(){
 	return true;
 }
 bool UserOptions::ReadOptionFile(vector<string> &listOfStrings){
-	string Data = "";
-	getline(OptionFile, Data, ';');
-	for (unsigned i = 0 ;i<Data.size(); i++){
-		unsigned NextCommaIndex = Data.find(',',i+1);
-		for (unsigned CommaIndex = Data.find(',', i);CommaIndex < NextCommaIndex; CommaIndex++){
-			string Temp = "";
-			Temp.push_back(Data[CommaIndex]);
-			listOfStrings.push_back(Temp);
-		}
+	string Data;
+	getline(OptionFileRead, Data, ';');
+	unsigned CommaIndex = Data.find(',');
+	unsigned  NextCommaIndex = Data.find(',', CommaIndex + 1);
+	for (int i = 0; i < 1; i++){
+		string Temp = Data.substr(CommaIndex, NextCommaIndex - CommaIndex);
+		cout << Temp << endl;
+		listOfStrings.push_back(Temp);
 	}
 	return true;
 }
 bool UserOptions::WriteOptionFile(vector<string> &listOfStrings){
-	for (unsigned i = 0; i < listOfStrings.size(); i++){
-		cout << i << endl;
-		string Data = "";
-		if (!OptionFile.eof()){
-			getline(OptionFile, Data, ',');
-		}
-		if (listOfStrings.size() != i ){
-			if (listOfStrings[i] != Data){
-				cout << listOfStrings[i] << endl;
-				OptionFile << ',' << listOfStrings[i];
+	if (listOfStrings.size() != 0){
+		for (unsigned i = 0; i < listOfStrings.size(); i++){
+			cout << i << endl;
+			string Data = "";
+			if (!OptionFileRead.eof()){
+				getline(OptionFileRead, Data, ',');
+			}
+			if (listOfStrings.size() != i){
+				if (listOfStrings[i] != Data){
+					cout << listOfStrings[i] << endl;
+					OptionFileWrite << ',' << listOfStrings[i];
+					if (listOfStrings.size()==1)OptionFileWrite << ';';
+				}
+			}
+			else{
+				if (listOfStrings[i] != Data){
+					OptionFileWrite << listOfStrings[i] << ';';
+				}
 			}
 		}
-		else{
-			if (listOfStrings[i] != Data){
-				OptionFile << listOfStrings[i] << ';';
-			}
-		}
+		return true;
 	}
-	return true;
+	else{
+		return false;
+	}
 }
