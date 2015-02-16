@@ -9,18 +9,21 @@ class UserOptions{
 	public:
 		UserOptions(string FirstDirectory,string OptionFilename){
 			AddProjectDirectories(FirstDirectory);
-			OptionFile.open(OptionFilename, ios::in | ios::out );
+			OptionFileWrite.open(OptionFilename, ios::in | ios::out );
+			OptionFileRead.open(OptionFilename, ios::in | ios::out);
 			cout << ProjectDirectories[0] << endl;
 		}
 		UserOptions(string OptionFilename){
-			OptionFile.open(OptionFilename, ios::in | ios::out );
+			OptionFileWrite.open(OptionFilename, ios::in | ios::out );
+			OptionFileRead.open(OptionFilename, ios::in | ios::out);
 			ReadOptionFile(ProjectDirectories);
 			ReadOptionFile(IgnoredDirectories);
 		}
 		~UserOptions(){
 			WriteOptionFile(ProjectDirectories);
 			WriteOptionFile(IgnoredDirectories);
-			OptionFile.close();
+			OptionFileWrite.close();
+			OptionFileRead.close();
 		}
 		bool AddProjectDirectories(string Directory);
 		bool RemoveProjectDirectories(unsigned index);
@@ -33,7 +36,8 @@ class UserOptions{
 	private:
 		bool ReadOptionFile(vector<string> &listOfStrings);
 		bool WriteOptionFile(vector<string> &listOfStrings);
-		fstream OptionFile;
+		fstream OptionFileWrite;
+		fstream OptionFileRead;
 		vector<string> ProjectDirectories;
 		vector<string> IgnoredDirectories;
 };
