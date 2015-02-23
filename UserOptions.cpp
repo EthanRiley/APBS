@@ -29,15 +29,20 @@ bool UserOptions::DeleteIgnoredDirectories(){
 	IgnoredDirectories.clear();
 	return true;
 }
-bool UserOptions::ReadOptionFile(vector<string> &listOfStrings){//Testing; Does Nothing Right Now
+bool UserOptions::ReadOptionFile(vector<string> &listOfStrings){//compile Test Do
 	string Data;
 	getline(OptionFileRead, Data, ';');
-	unsigned CommaIndex = Data.find(',');
-	unsigned  NextCommaIndex = Data.find(',', CommaIndex + 1);
-	for (int i = 0; i < 1; i++){
-		string Temp = Data.substr(CommaIndex, NextCommaIndex - CommaIndex);
-		cout << Temp << endl;
-		listOfStrings.push_back(Temp);
+	for (bool a=false;!a;){
+		size_t CommaIndex = Data.find(',');
+		size_t NextCommaIndex = Data.find(',', CommaIndex + 1);
+		if(NextCommaIndex!=string::npos){
+			string Temp = Data.substr(CommaIndex, NextCommaIndex - CommaIndex);
+			cout << Temp << endl;
+			listOfStrings.push_back(Temp);
+		}
+		else{
+			a=true;
+		}
 	}
 	return true;
 }
